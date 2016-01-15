@@ -1,0 +1,47 @@
+
+@----------------------------------------------------------@
+|        PLINK!       |     v1.07      |   10/Aug/2009     |
+|----------------------------------------------------------|
+|  (C) 2009 Shaun Purcell, GNU General Public License, v2  |
+|----------------------------------------------------------|
+|  For documentation, citation & bug-report instructions:  |
+|        http://pngu.mgh.harvard.edu/purcell/plink/        |
+@----------------------------------------------------------@
+
+Skipping web check... [ --noweb ] 
+Writing this text to log file [ testgcta.short.log ]
+Analysis started: Thu Apr 17 11:59:48 2014
+
+Options in effect:
+	--tfile testgcta
+	--make-bed
+	--keep tmp.tfam
+	--out testgcta.short
+	--noweb
+
+** For gPLINK compatibility, do not use '.' in --out **
+Reading pedigree information from [ testgcta.tfam ] 
+3925 individuals read from [ testgcta.tfam ] 
+0 individuals with nonmissing phenotypes
+Assuming a disease phenotype (1=unaff, 2=aff, 0=miss)
+Missing phenotype value is also -9
+0 cases, 0 controls and 3925 missing
+1643 males, 2282 females, and 0 of unspecified sex
+1000 (of 1000) markers to be included from [ testgcta.tped ]
+Reading individuals to keep [ tmp.tfam ] ... 10 read
+3915 individuals removed with --keep option
+Before frequency and genotyping pruning, there are 1000 SNPs
+10 founders and 0 non-founders found
+Total genotyping rate in remaining individuals is 0.9982
+0 SNPs failed missingness test ( GENO > 1 )
+0 SNPs failed frequency test ( MAF < 0 )
+After frequency and genotyping pruning, there are 1000 SNPs
+After filtering, 0 cases, 0 controls and 10 missing
+After filtering, 4 males, 6 females, and 0 of unspecified sex
+Writing pedigree information to [ testgcta.short.fam ] 
+Writing map (extended format) information to [ testgcta.short.bim ] 
+Writing genotype bitfile to [ testgcta.short.bed ] 
+Using (default) SNP-major mode
+
+Analysis finished: Thu Apr 17 11:59:50 2014
+

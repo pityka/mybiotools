@@ -1,0 +1,44 @@
+
+@----------------------------------------------------------@
+|        PLINK!       |     v1.07      |   10/Aug/2009     |
+|----------------------------------------------------------|
+|  (C) 2009 Shaun Purcell, GNU General Public License, v2  |
+|----------------------------------------------------------|
+|  For documentation, citation & bug-report instructions:  |
+|        http://pngu.mgh.harvard.edu/purcell/plink/        |
+@----------------------------------------------------------@
+
+Skipping web check... [ --noweb ] 
+Writing this text to log file [ kicsi.log ]
+Analysis started: Tue Dec  6 10:36:51 2011
+
+Options in effect:
+	--file kicsi
+	--make-bed
+	--out kicsi
+	--noweb
+
+1 (of 1) markers to be included from [ kicsi.map ]
+Warning, found 2 individuals with ambiguous sex codes
+Writing list of these individuals to [ kicsi.nosex ]
+2 individuals read from [ kicsi.ped ] 
+0 individuals with nonmissing phenotypes
+Assuming a disease phenotype (1=unaff, 2=aff, 0=miss)
+Missing phenotype value is also -9
+0 cases, 0 controls and 2 missing
+0 males, 0 females, and 2 of unspecified sex
+Before frequency and genotyping pruning, there are 1 SNPs
+2 founders and 0 non-founders found
+Total genotyping rate in remaining individuals is 1
+0 SNPs failed missingness test ( GENO > 1 )
+0 SNPs failed frequency test ( MAF < 0 )
+After frequency and genotyping pruning, there are 1 SNPs
+After filtering, 0 cases, 0 controls and 2 missing
+After filtering, 0 males, 0 females, and 2 of unspecified sex
+Writing pedigree information to [ kicsi.fam ] 
+Writing map (extended format) information to [ kicsi.bim ] 
+Writing genotype bitfile to [ kicsi.bed ] 
+Using (default) SNP-major mode
+
+Analysis finished: Tue Dec  6 10:36:51 2011
+

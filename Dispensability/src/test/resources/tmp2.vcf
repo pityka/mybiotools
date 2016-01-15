@@ -1,0 +1,32 @@
+##fileformat=VCFv4.1
+##INFO=<ID=LDAF,Number=1,Type=Float,Description="MLE Allele Frequency Accounting for LD">
+##INFO=<ID=AVGPOST,Number=1,Type=Float,Description="Average posterior probability from MaCH/Thunder">
+##INFO=<ID=RSQ,Number=1,Type=Float,Description="Genotype imputation quality from MaCH/Thunder">
+##INFO=<ID=ERATE,Number=1,Type=Float,Description="Per-marker Mutation rate from MaCH/Thunder">
+##INFO=<ID=THETA,Number=1,Type=Float,Description="Per-marker Transition rate from MaCH/Thunder">
+##INFO=<ID=CIEND,Number=2,Type=Integer,Description="Confidence interval around END for imprecise variants">
+##INFO=<ID=CIPOS,Number=2,Type=Integer,Description="Confidence interval around POS for imprecise variants">
+##INFO=<ID=END,Number=1,Type=Integer,Description="End position of the variant described in this record">
+##INFO=<ID=HOMLEN,Number=.,Type=Integer,Description="Length of base pair identical micro-homology at event breakpoints">
+##INFO=<ID=HOMSEQ,Number=.,Type=String,Description="Sequence of base pair identical micro-homology at event breakpoints">
+##INFO=<ID=SVLEN,Number=1,Type=Integer,Description="Difference in length between REF and ALT alleles">
+##INFO=<ID=SVTYPE,Number=1,Type=String,Description="Type of structural variant">
+##INFO=<ID=AC,Number=.,Type=Integer,Description="Alternate Allele Count">
+##INFO=<ID=AN,Number=1,Type=Integer,Description="Total Allele Count">
+##INFO=<ID=GTS,Number=.,Type=String,Description="GTS">
+##INFO=<ID=GTC,Number=.,Type=Integer,Description="GTS">
+##ALT=<ID=DEL,Description="Deletion">
+##INFO=<ID=AA,Number=1,Type=String,Description="Ancestral Allele, ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/pilot_data/technical/reference/ancestral_alignments/README">
+##INFO=<ID=AF,Number=1,Type=Float,Description="Global Allele Frequency based on AC/AN">
+##INFO=<ID=AMR_AF,Number=1,Type=Float,Description="Allele Frequency for samples from AMR based on AC/AN">
+##INFO=<ID=ASN_AF,Number=1,Type=Float,Description="Allele Frequency for samples from ASN based on AC/AN">
+##INFO=<ID=AFR_AF,Number=1,Type=Float,Description="Allele Frequency for samples from AFR based on AC/AN">
+##INFO=<ID=EUR_AF,Number=1,Type=Float,Description="Allele Frequency for samples from EUR based on AC/AN">
+##INFO=<ID=VT,Number=1,Type=String,Description="indicates what type of variant the line represents">
+##INFO=<ID=SNPSOURCE,Number=.,Type=String,Description="indicates if a snp was called when analysing the low coverage or exome alignment data">
+##reference=GRCh37
+##reference=GRCh37
+#CHROM	POS	ID	REF	ALT	QUAL	FILTER	INFO	
+22	16287649	.	G	A	100	PASS	RSQ=0.5421;AVGPOST=0.9342;LDAF=0.0645;AN=2184;ERATE=0.0115;VT=SNP;AA=.;THETA=0.0095;AC=81;SNPSOURCE=EXOME;AF=0.04;ASN_AF=0.03;AMR_AF=0.02;AFR_AF=0.06;EUR_AF=0.03;GTS=GG,GA,AA;GTC=100,50,30
+22	16287784	.	C	CCT,T	100	PASS	RSQ=0.7151;AN=2184;AC=13;VT=SNP;AA=.;ERATE=0.0030;SNPSOURCE=EXOME;LDAF=0.0089;THETA=0.0043;AVGPOST=0.9941;AF=0.01;AMR_AF=0.0028;AFR_AF=0.0020;EUR_AF=0.01;GTS=RR,A1R,A1A1,A2R,A2A2,A1A2;GTC=100,50,30,40,10,20
+22	16287785	.	C	T	100	PASS	RSQ=0.7151;AN=2184;AC=13;VT=SNP;AA=.;ERATE=0.0030;SNPSOURCE=EXOME;LDAF=0.0089;THETA=0.0043;AVGPOST=0.9941;AF=0.01;AMR_AF=0.0028;AFR_AF=0.0020;EUR_AF=0.01;GTS=CC,TT,TC;GTC=100,50,30

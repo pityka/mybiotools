@@ -1,0 +1,51 @@
+gwas {
+  bedFile = ""
+  onlySummary = off
+  plotQQinSummary = off
+  covariateFile = ""
+#  sequenceKeyMapFile = ""
+#  gwas.excludeSNPFile = ""
+  software = "PLINK" # EMMAX
+
+  plink {
+	phenotype = "variation" # hypermutation
+  }
+}
+
+variationPhenotype {
+ minimumMinorAlleleCount = 20  
+}
+
+tasks {
+
+hostName = # hostname to start the service on. Default is localhost
+hostFile = # a file containing the hostname. Has priority over hostName
+
+port = 2655 # port to start the service
+
+numberOfCores = 1 # if 0, no launcher service will be started.
+
+listOfExternalLaunchers = # a file describing all external launcher nodes: "hostname port" per line
+
+balancerHost = # hostname of the external balancer and cacher service
+balancerPort = # port of the external balancer and cacher service. 
+ 			   # in case these are empty, then balancer and cache services are started on this jvm.
+
+launcherActorTimeOut = # timeout of ping, after which launcher is considered dead.
+loadBalancerWaitingTime = # period time of repeated query of launcher nodes
+
+globalFileSystem = # boolean
+sharedFileSystem = # path of a globally visible shared folder. used as tmp
+
+}
+
+multigene {
+  workingDirectory = "/Volumes/LA-PUBLIC/testpol_phyl1"
+  alignmentFiles = [
+  "/Volumes/LA-PUBLIC/lausanne/alignments/HOMER_genes/POL/POL_prot_aligned.fasta",
+  ]
+  nucleotideAlignmentFiles = [
+  ]
+  referenceNames = ["hxb2pol"]
+  
+}

@@ -1,0 +1,44 @@
+
+@----------------------------------------------------------@
+|        PLINK!       |     v1.07      |   10/Aug/2009     |
+|----------------------------------------------------------|
+|  (C) 2009 Shaun Purcell, GNU General Public License, v2  |
+|----------------------------------------------------------|
+|  For documentation, citation & bug-report instructions:  |
+|        http://pngu.mgh.harvard.edu/purcell/plink/        |
+@----------------------------------------------------------@
+
+Web-based version check ( --noweb to skip )
+Connecting to web...  OK, v1.07 is current
+
+Writing this text to log file [ testgcta.log ]
+Analysis started: Fri Apr 18 14:17:49 2014
+
+Options in effect:
+	--tfile testgcta
+	--make-bed
+	--out testgcta
+
+Reading pedigree information from [ testgcta.tfam ] 
+3925 individuals read from [ testgcta.tfam ] 
+0 individuals with nonmissing phenotypes
+Assuming a disease phenotype (1=unaff, 2=aff, 0=miss)
+Missing phenotype value is also -9
+0 cases, 0 controls and 3925 missing
+1643 males, 2282 females, and 0 of unspecified sex
+1000 (of 1000) markers to be included from [ testgcta.tped ]
+Before frequency and genotyping pruning, there are 1000 SNPs
+3925 founders and 0 non-founders found
+Total genotyping rate in remaining individuals is 0.98981
+0 SNPs failed missingness test ( GENO > 1 )
+0 SNPs failed frequency test ( MAF < 0 )
+After frequency and genotyping pruning, there are 1000 SNPs
+After filtering, 0 cases, 0 controls and 3925 missing
+After filtering, 1643 males, 2282 females, and 0 of unspecified sex
+Writing pedigree information to [ testgcta.fam ] 
+Writing map (extended format) information to [ testgcta.bim ] 
+Writing genotype bitfile to [ testgcta.bed ] 
+Using (default) SNP-major mode
+
+Analysis finished: Fri Apr 18 14:17:51 2014
+

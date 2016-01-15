@@ -1,0 +1,46 @@
+
+@----------------------------------------------------------@
+|        PLINK!       |     v1.07      |   10/Aug/2009     |
+|----------------------------------------------------------|
+|  (C) 2009 Shaun Purcell, GNU General Public License, v2  |
+|----------------------------------------------------------|
+|  For documentation, citation & bug-report instructions:  |
+|        http://pngu.mgh.harvard.edu/purcell/plink/        |
+@----------------------------------------------------------@
+
+Skipping web check... [ --noweb ] 
+Writing this text to log file [ 7.log ]
+Analysis started: Tue Dec 20 11:12:25 2011
+
+Options in effect:
+	--bfile medium
+	--snps rs12143459
+	--recode
+	--out 7
+	--noweb
+
+Reading map (extended format) from [ medium.bim ] 
+24806 markers to be included from [ medium.bim ]
+Reading pedigree information from [ medium.fam ] 
+388 individuals read from [ medium.fam ] 
+388 individuals with nonmissing phenotypes
+Assuming a disease phenotype (1=unaff, 2=aff, 0=miss)
+Missing phenotype value is also -9
+0 cases, 388 controls and 0 missing
+322 males, 66 females, and 0 of unspecified sex
+Reading genotype bitfile from [ medium.bed ] 
+Detected that binary PED file is v1.00 SNP-major mode
+Extracting 1 SNPs
+Before frequency and genotyping pruning, there are 1 SNPs
+388 founders and 0 non-founders found
+Total genotyping rate in remaining individuals is 1
+0 SNPs failed missingness test ( GENO > 1 )
+0 SNPs failed frequency test ( MAF < 0 )
+After frequency and genotyping pruning, there are 1 SNPs
+After filtering, 0 cases, 388 controls and 0 missing
+After filtering, 322 males, 66 females, and 0 of unspecified sex
+Writing recoded ped file to [ 7.ped ] 
+Writing new map file to [ 7.map ] 
+
+Analysis finished: Tue Dec 20 11:12:26 2011
+

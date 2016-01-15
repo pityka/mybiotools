@@ -1,0 +1,7 @@
+versionGenome	20201
+genomeFastaFiles	ref.fasta 
+genomeSAindexNbases	14
+genomeChrBinNbits	18
+genomeSAsparseD	1
+sjdbOverhang	0
+sjdbFileChrStartEnd	-

@@ -1,0 +1,21 @@
+
+Application performing z-score meta analysis
+============================================
+
+Usage
+-----
+
+Configuration keys required:
+
+* Key: assocfiles is a list of plink result files with header. Column are searched up by headers.
+
+* Key: out is an output path trunk.
+
+Example configuration file
+--------------------------
+assocfiles = ["file1","file2"]
+out = "my/path/myout"
+
+
+
+

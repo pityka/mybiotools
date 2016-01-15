@@ -1,0 +1,48 @@
+
+@----------------------------------------------------------@
+|        PLINK!       |     v1.07      |   10/Aug/2009     |
+|----------------------------------------------------------|
+|  (C) 2009 Shaun Purcell, GNU General Public License, v2  |
+|----------------------------------------------------------|
+|  For documentation, citation & bug-report instructions:  |
+|        http://pngu.mgh.harvard.edu/purcell/plink/        |
+@----------------------------------------------------------@
+
+Web-based version check ( --noweb to skip )
+Connecting to web...  OK, v1.07 is current
+
++++ PLINK 1.9 is now available! See above website for details +++ 
+
+Writing this text to log file [ grmtest_tiny.log ]
+Analysis started: Tue Jun 24 22:20:53 2014
+
+Options in effect:
+	--tfile grmtest_tiny
+	--make-bed
+	--out grmtest_tiny
+
+Reading pedigree information from [ grmtest_tiny.tfam ] 
+3 individuals read from [ grmtest_tiny.tfam ] 
+0 individuals with nonmissing phenotypes
+Assuming a disease phenotype (1=unaff, 2=aff, 0=miss)
+Missing phenotype value is also -9
+0 cases, 0 controls and 3 missing
+1 males, 1 females, and 1 of unspecified sex
+Warning, found 1 individuals with ambiguous sex codes
+Writing list of these individuals to [ grmtest_tiny.nosex ]
+5 (of 5) markers to be included from [ grmtest_tiny.tped ]
+Before frequency and genotyping pruning, there are 5 SNPs
+3 founders and 0 non-founders found
+Total genotyping rate in remaining individuals is 1
+0 SNPs failed missingness test ( GENO > 1 )
+0 SNPs failed frequency test ( MAF < 0 )
+After frequency and genotyping pruning, there are 5 SNPs
+After filtering, 0 cases, 0 controls and 3 missing
+After filtering, 1 males, 1 females, and 1 of unspecified sex
+Writing pedigree information to [ grmtest_tiny.fam ] 
+Writing map (extended format) information to [ grmtest_tiny.bim ] 
+Writing genotype bitfile to [ grmtest_tiny.bed ] 
+Using (default) SNP-major mode
+
+Analysis finished: Tue Jun 24 22:20:53 2014
+

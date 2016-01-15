@@ -1,0 +1,48 @@
+
+@----------------------------------------------------------@
+|        PLINK!       |     v1.07      |   10/Aug/2009     |
+|----------------------------------------------------------|
+|  (C) 2009 Shaun Purcell, GNU General Public License, v2  |
+|----------------------------------------------------------|
+|  For documentation, citation & bug-report instructions:  |
+|        http://pngu.mgh.harvard.edu/purcell/plink/        |
+@----------------------------------------------------------@
+
+Web-based version check ( --noweb to skip )
+Connecting to web...  OK, v1.07 is current
+
+Writing this text to log file [ 4b.log ]
+Analysis started: Thu Apr 17 11:05:57 2014
+
+Options in effect:
+	--bfile 4b
+	--recode
+	--transpose
+	--out 4b
+
+Reading map (extended format) from [ 4b.bim ] 
+2 markers to be included from [ 4b.bim ]
+Reading pedigree information from [ 4b.fam ] 
+3 individuals read from [ 4b.fam ] 
+0 individuals with nonmissing phenotypes
+Assuming a disease phenotype (1=unaff, 2=aff, 0=miss)
+Missing phenotype value is also -9
+0 cases, 0 controls and 3 missing
+1 males, 1 females, and 1 of unspecified sex
+Warning, found 1 individuals with ambiguous sex codes
+Writing list of these individuals to [ 4b.nosex ]
+Reading genotype bitfile from [ 4b.bed ] 
+Detected that binary PED file is v1.00 SNP-major mode
+Before frequency and genotyping pruning, there are 2 SNPs
+3 founders and 0 non-founders found
+Total genotyping rate in remaining individuals is 1
+0 SNPs failed missingness test ( GENO > 1 )
+0 SNPs failed frequency test ( MAF < 0 )
+After frequency and genotyping pruning, there are 2 SNPs
+After filtering, 0 cases, 0 controls and 3 missing
+After filtering, 1 males, 1 females, and 1 of unspecified sex
+Writing transposed ped file to [ 4b.tped ] 
+Writing family information to [ 4b.tfam ] 
+
+Analysis finished: Thu Apr 17 11:05:57 2014
+
