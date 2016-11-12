@@ -21,16 +21,16 @@ object BuildSettings {
   val gitHeadCommitShaTask = TaskKey[Unit]("githeadcommit", "current git commit SHA")
 
 
-  
 
 
 
-val extraSettings = 
-  sbtassembly.Plugin.assemblySettings  ++ 
+
+val extraSettings =
+  sbtassembly.Plugin.assemblySettings  ++
     com.typesafe.sbt.SbtScalariform.scalariformSettings ++
     ReflectPlugin.allSettings ++
-    Seq (    
-    updateOptions := updateOptions.value.withConsolidatedResolution(true),    
+    Seq (
+    updateOptions := updateOptions.value.withConsolidatedResolution(true),
     scalaVersion := buildScalaVersion,
     gitHeadCommitShaTask in ThisBuild <<= gitHeadCommitSha in ThisBuild map println,
     gitHeadCommitSha in ThisBuild := scala.util.Try(
@@ -39,7 +39,7 @@ val extraSettings =
       sbt.IO.read(file("GITCOMMITHASH")).trim
       ))
 
-  val buildSettings = Defaults.defaultSettings ++ 
+  val buildSettings = Defaults.defaultSettings ++
     extraSettings ++ Seq(
           scalacOptions in Compile <++= scalaVersion map { sv =>
       val l : Seq[String] = sv match {
@@ -54,7 +54,7 @@ val extraSettings =
         case scalaVersionRegex(major, minor) if (major == "2" && minor.toInt >= 10)   => Seq("-unchecked","-feature","-language:implicitConversions","-language:postfixOps","-language:reflectiveCalls","-language:existentials","-Xmax-classfile-name","254")
         case _ => Seq(  "-unchecked" )
       }
-      
+
     },
     mergeStrategy in assembly <<= (mergeStrategy in assembly) { (old) =>
       {
@@ -65,7 +65,7 @@ val extraSettings =
     },
     compile <<= (compile in Compile) dependsOn (compile in Test),
     resolvers ++= Resolvers.allres
-  ) 
+  )
 }
 
 object Resolvers {
@@ -75,9 +75,9 @@ object Resolvers {
   val b =  "GuiceyFruite" at "http://guiceyfruit.googlecode.com/svn/repo/releases/"
 
   val c =  "Twitter" at "http://maven.twttr.com/"
-  
+
   val scalatools = "Scala Tools" at "http://scala-tools.org/repo-releases"
-  
+
   val typesafe = "Typesafe Repo" at "http://repo.typesafe.com/typesafe/releases/"
 
   val freehep = "Freehep" at "http://java.freehep.org/maven2"
@@ -91,11 +91,11 @@ object Resolvers {
   "Sonatype Releases" at "http://oss.sonatype.org/content/repositories/releases"
 )
 
-  val allres = Seq ( b, c,typesafe,freehep,apache_snapshots,localmaven) ++ sonatype 
+  val allres = Seq ( b, c,typesafe,freehep,apache_snapshots,localmaven) ++ sonatype
 }
 
 object Dependencies {
-  val scalatest = "org.scalatest" %% "scalatest" % "2.1.5" % "test" 
+  val scalatest = "org.scalatest" %% "scalatest" % "2.1.5" % "test"
 
   val typesafeconfig = "com.typesafe" % "config" % "1.2.0"
 
@@ -115,7 +115,7 @@ object Dependencies {
 
 
   val ganymed =  "ch.ethz.ganymed" % "ganymed-ssh2" % "261"
- 
+
   val colt = "colt" % "colt" % "1.2.0"
 
   val saddle = "org.scala-saddle" %% "saddle-core" % "1.3.4"  exclude("com.googlecode.efficient-java-matrix-library", "ejml")
@@ -128,11 +128,11 @@ object Dependencies {
   val awssdk =  "com.amazonaws" % "aws-java-sdk" % "1.5.4"
 
   val scalacheck = "org.scalacheck" %% "scalacheck" % "1.11.3" % "test"
-  
+
   val guava = "com.google.guava" % "guava" % "18.0"
 
   val googlecollections = "com.google.collections" % "google-collections" % "1.0"
-  
+
   val ejml = "org.ejml" % "all" % "0.28"
 
   val commonsMath3 = "org.apache.commons" % "commons-math3" % "3.4.1"
@@ -141,32 +141,32 @@ object Dependencies {
 
   val commonsIO = "commons-io" % "commons-io" % "2.3"
 
-  val netlibjavacore = "com.github.fommil.netlib" % "core" % "1.1.2" 
+  val netlibjavacore = "com.github.fommil.netlib" % "core" % "1.1.2"
 
   val netlibjavaosx = "com.github.fommil.netlib" % "netlib-native_system-osx-x86_64" % "1.1" classifier "natives"
 
   val netlibjavalinuxgcc = "com.github.fommil.netlib" % "netlib-native_system-linux-x86_64" % "1.1" classifier "natives"
 
   // val leveldb=  "org.iq80.leveldb" % "leveldb" % "0.7"
-      
+
      val jline = "jline" % "jline" % "0.9.92"
-     
+
      val junit = "junit" % "junit" % "4.8.1" % "test"
-  
+
 
     val gral = "de.erichseifert.gral" %% "gral" % "0.9-SNAPSHOT-pityu6b9"
 
     val vectorgraphics2d = "de.erichseifert.gral" %% "vectorgraphics2d" % "0.9.1-pityu1b4"
-  
+
   val commonDeps = Seq(htsjdk,guava,ejml,scalatest,scalacheck,typesafeconfig,commonsMath3,gral,vectorgraphics2d,colt,saddle,jodaconvert,
     "com.google.code.findbugs" % "jsr305" % "1.3.+",hierarchicalclustering,akka_actor,netlibjavacore,netlibjavalinuxgcc,netlibjavaosx)
- 
-  
+
+
   val alldeps = Seq(scalatest,guava,ejml,junit,typesafeconfig
     ) ++ commonDeps
 
-  
-    
+
+
 }
 
 
@@ -193,18 +193,25 @@ object MyBuild extends Build
   lazy val root = Project(
     "root",
     file("."),
-    settings = buildSettings ++ Seq (resolvers := allres, libraryDependencies ++= alldeps) ) 
-    .dependsOn(Commons,HDFApp) 
+    settings = buildSettings ++ Seq (resolvers := allres, libraryDependencies ++= alldeps) )
+    .dependsOn(Commons,HDFApp)
 
   lazy val aggregator = Project("aggregate",file("aggregate"),settings=buildSettings)
-    .aggregate(Commons,HDFApp,Tasks,SetTestApp,GWASApp,PlotQQApp,PlotManhattanApp,FDRApp,TranAlignApp,TranslateFastaApp,ZmetaApp,MaskBedToBimApp,GrepFastaApp,DiscriminateToFilesApp,TaskWorkflows,TasksSharedFileTypes,MSAApp,ViralShortReadApp,GenotypePipeline,G2GSequence,Dummify,RNASeqAlignPipeline,Dispensability,MeasureBedApp)
+    .aggregate(Commons,HDFApp,Tasks,SetTestApp,GWASApp,PlotQQApp,PlotManhattanApp,FDRApp,TranAlignApp,TranslateFastaApp,ZmetaApp,MaskBedToBimApp,GrepFastaApp,DiscriminateToFilesApp,TaskWorkflows,TasksSharedFileTypes,MSAApp,ViralShortReadApp,GenotypePipeline,G2GSequence,Dummify,RNASeqAlignPipeline,Dispensability,MeasureBedApp,ProjectHIVHeritability)
+
+
+    lazy val ProjectHIVHeritability = Project(
+      id = "ProjectHIVHeritability",
+      base = file("ProjectHIVHeritability/"),
+      settings = buildSettings ++ Seq(resolvers := allres, libraryDependencies ++= alldeps )
+      ) dependsOn( TaskWorkflows,Tasks,Commons)
 
 
   lazy val HDFApp = Project(
     "HDF5App",
     file("HDF5App"),
-    settings = buildSettings ++ Seq(resolvers := allres, libraryDependencies ++= commonDeps ++ Seq(commonsIO,commonsLang,akka_actor,akka_remote)  ) 
-  ) dependsOn (Commons,Tasks,vcfhelpers)  
+    settings = buildSettings ++ Seq(resolvers := allres, libraryDependencies ++= commonDeps ++ Seq(commonsIO,commonsLang,akka_actor,akka_remote)  )
+  ) dependsOn (Commons,Tasks,vcfhelpers)
 
 
   lazy val SetTestApp = Project(
@@ -213,18 +220,18 @@ object MyBuild extends Build
     settings = buildSettings ++ Seq(resolvers := allres, libraryDependencies ++= (commonDeps) )
   ) dependsOn (Commons,Tasks,HDFApp,vcfhelpers,TaskWorkflows)
 
-  
+
   lazy val Tasks = Project(
     "Tasks",
     file("Tasks"),
     settings = buildSettings ++ Seq(resolvers := allres, libraryDependencies ++= commonDeps ++ akkadeps ++ Seq(awssdk,ganymed) )
-  ) dependsOn (Commons,TasksMonitorWebSharedJvm) 
+  ) dependsOn (Commons,TasksMonitorWebSharedJvm)
 
   lazy val TasksMonitorWebClient = (project in file("TasksMonitorWebClient")).settings(extraSettings++workbenchSettings:_*).settings(
     name := "TasksMonitorWebClient",
       bootSnippet := "example.ScalaJSExample().main();",
   libraryDependencies ++= Seq(
-    "org.scala-js" %%% "scalajs-dom" % "0.8.0",   
+    "org.scala-js" %%% "scalajs-dom" % "0.8.0",
     "com.lihaoyi" %%% "upickle" % "0.2.8",
     "com.lihaoyi" %%% "autowire" % "0.2.5",
     "com.lihaoyi" %%% "scalatags" % "0.5.2",
@@ -260,12 +267,12 @@ lazy val TasksMonitorWebServer = (project in file("TasksMonitorWebServer")).sett
     (artifactPath in (TasksMonitorWebClient, Compile, fastOptJS)).value
   }).aggregate(TasksMonitorWebClient).
   dependsOn(TasksMonitorWebSharedJvm,Tasks)
- 
+
   lazy val TranAlignApp = Project(
     "TranAlign",
     file("TranAlign"),
     settings = buildSettings ++ Seq(resolvers := allres, libraryDependencies ++= commonDeps )
-  ) dependsOn (Commons) 
+  ) dependsOn (Commons)
 
   lazy val PlotQQApp = Project(
     "PlotQQApp",
@@ -290,33 +297,33 @@ lazy val TasksMonitorWebServer = (project in file("TasksMonitorWebServer")).sett
     file("FDRApp"),
     settings = buildSettings ++ Seq(resolvers := allres, libraryDependencies ++= commonDeps )
   ) dependsOn (Commons)
-  
+
   lazy val PlotManhattanApp = Project(
     "PlotManhattanApp",
     file("PlotManhattanApp"),
     settings = buildSettings ++ Seq(resolvers := allres, libraryDependencies ++= commonDeps )
-  ) dependsOn (Commons) 
+  ) dependsOn (Commons)
 
   lazy val MaskBedToBimApp = Project(
     "MaskBedToBimApp",
     file("MaskBedToBimApp"),
     settings = buildSettings ++ Seq(resolvers := allres, libraryDependencies ++= commonDeps )
-  ) dependsOn (Commons) 
+  ) dependsOn (Commons)
 
   lazy val ZmetaApp = Project(
     "ZmetaApp",
     file("ZmetaApp"),
     settings = buildSettings ++ Seq(resolvers := allres, libraryDependencies ++= commonDeps )
-  ) dependsOn (Commons) 
+  ) dependsOn (Commons)
 
-  
+
    lazy val GWASApp = Project(
     "GWASApp",
     file("GWASApp"),
     settings = buildSettings ++ Seq(resolvers := allres, libraryDependencies ++= (commonDeps ++ Seq(akka_agent)))
   ) dependsOn (TaskWorkflows)
 
-  
+
   //  lazy val FastlmmWrapper = Project(
   //   "FastlmmWrapper",
   //   file("FastlmmWrapper"),
@@ -327,27 +334,27 @@ lazy val TasksMonitorWebServer = (project in file("TasksMonitorWebServer")).sett
     "TranslateFastaApp",
     file("TranslateFastaApp"),
     settings = buildSettings ++ Seq(resolvers := allres, libraryDependencies ++= commonDeps )
-  ) dependsOn (Commons) 
+  ) dependsOn (Commons)
 
   lazy val GrepFastaApp = Project(
     "GrepFastaApp",
     file("GrepFastaApp"),
     settings = buildSettings ++ Seq(resolvers := allres, libraryDependencies ++= commonDeps )
-  ) dependsOn (Commons) 
+  ) dependsOn (Commons)
 
     lazy val SNP2HLABestAllele = Project(
     "SNP2HLABestAllele",
     file("SNP2HLABestAllele"),
     settings = buildSettings ++ Seq(resolvers := allres, libraryDependencies ++= commonDeps )
-  ) dependsOn (Commons) 
+  ) dependsOn (Commons)
 
-  
+
 
   lazy val DiscriminateToFilesApp = Project(
     "DiscriminateToFilesApp",
     file("DiscriminateToFilesApp"),
     settings = buildSettings ++ Seq(resolvers := allres, libraryDependencies ++= commonDeps )
-  ) dependsOn (Commons) 
+  ) dependsOn (Commons)
 
   lazy val WorkerNode: Project = Project(
     "WorkerNode",
@@ -366,14 +373,14 @@ lazy val TasksMonitorWebServer = (project in file("TasksMonitorWebServer")).sett
     base = file("TaskWorkflows/"),
     settings = buildSettings ++ Seq(resolvers := allres, libraryDependencies ++= alldeps )
     )
-  .dependsOn(ImputationCommon,vcfhelpers,TasksSharedFileTypes) 
+  .dependsOn(ImputationCommon,vcfhelpers,TasksSharedFileTypes)
 
    lazy val TasksSharedFileTypes = Project(
     id = "TasksSharedFileTypes",
     base = file("TasksSharedFileTypes/"),
     settings = buildSettings ++ Seq(resolvers := allres, libraryDependencies ++= alldeps )
     )
-  .dependsOn(Tasks,HDFApp) 
+  .dependsOn(Tasks,HDFApp)
 
 
 
@@ -395,7 +402,7 @@ lazy val TasksMonitorWebServer = (project in file("TasksMonitorWebServer")).sett
     base = file("Dispensability/"),
     settings = buildSettings ++ Seq(resolvers := allres, libraryDependencies ++= alldeps )
     ) dependsOn( Tasks,Commons,vcfhelpers)
-  
+
   lazy val GenotypePipeline = Project(
     id = "GenotypePipeline",
     base = file("GenotypePipeline/"),
@@ -425,8 +432,8 @@ lazy val TasksMonitorWebServer = (project in file("TasksMonitorWebServer")).sett
     base = file("vcfhelpers/"),
     settings = buildSettings ++ Seq(resolvers := allres, libraryDependencies ++= commonDeps ++ akkadeps  )
     ) dependsOn( Commons)
-  
- 
+
+
 lazy val fmpp = TaskKey[Seq[File]]("fmpp")
   lazy val fmppOptions = SettingKey[Seq[String]]("fmpp-options")
   lazy val fmppConfig = config("fmpp")
@@ -460,7 +467,7 @@ lazy val fmpp = TaskKey[Seq[File]]("fmpp")
   // // Declare a project with ID 'sub1' in directory 'a'.
   // // Declare a classpath dependency on sub2 in the 'test' configuration.
   // lazy val sub1: Project = Project("sub1", file("a")) dependsOn(sub2 % "test")
-  // 
+  //
   // // Declare a project with ID 'sub2' in directory 'b'.
   // // Declare a configuration dependency on the root project.
   // lazy val sub2 = Project("sub2", file("b"), delegates = root :: Nil)
