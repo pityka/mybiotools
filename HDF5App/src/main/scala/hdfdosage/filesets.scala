@@ -1,25 +1,25 @@
-/* 
+/*
 * The MIT License
 *
-* Copyright (c) 2015 ECOLE POLYTECHNIQUE FEDERALE DE LAUSANNE, Switzerland, 
+* Copyright (c) 2015 ECOLE POLYTECHNIQUE FEDERALE DE LAUSANNE, Switzerland,
 * Group Fellay
 *
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the "Software"),
-* to deal in the Software without restriction, including without limitation 
-* the rights to use, copy, modify, merge, publish, distribute, sublicense, 
+* to deal in the Software without restriction, including without limitation
+* the rights to use, copy, modify, merge, publish, distribute, sublicense,
 * and/or sell copies of the Software, and to permit persons to whom the Software
 * is furnished to do so, subject to the following conditions:
 *
 * The above copyright notice and this permission notice shall be included in all
 * copies or substantial portions of the Software.
 *
-* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
-* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
-* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
-* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
-* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
-* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 * SOFTWARE.
 */
 
@@ -27,10 +27,10 @@ package hdfdosage
 
 import java.io.File
 import mybiotools._
-import hdfdosage.HDFDosageFile.HDFDosageReader
+// import hdfdosage.HDFDosageFile.HDFDosageReader
 import mybiotools.tasks._
 import mybiotools.gwascommons._
-import _root_.ch.systemsx.cisd.hdf5._
+// import _root_.ch.systemsx.cisd.hdf5._
 import mybiotools.gwascommons.genotypedata._
 import scala.util.Try
 import mybiotools.flatindex._
@@ -65,14 +65,14 @@ object FileSets {
     def name = file.getName
     def path = file
   }
-  case class VCFFile(file: java.io.File) extends GenotypeFileSet {
-    def name = file.getName
-    def path = file
-  }
-  case class VCFFileWithIndex(file: java.io.File, indexFile: java.io.File) extends GenotypeFileSet {
-    def name = file.getName
-    def path = file
-  }
+  // case class VCFFile(file: java.io.File) extends GenotypeFileSet {
+  //   def name = file.getName
+  //   def path = file
+  // }
+  // case class VCFFileWithIndex(file: java.io.File, indexFile: java.io.File) extends GenotypeFileSet {
+  //   def name = file.getName
+  //   def path = file
+  // }
   case class BedFile(bed: java.io.File, bim: java.io.File, fam: java.io.File) extends GenotypeFileSet {
     def name = bed.getName
     def path = bed
@@ -80,7 +80,7 @@ object FileSets {
 
   def parseConfig(config: com.typesafe.config.Config): List[GenotypeFileSet] = {
     val configInstance = config.withFallback(com.typesafe.config.ConfigFactory.parseString("""
-     tped =""     
+     tped =""
      tfam = ""
      bed = ""
      bim =""
@@ -125,10 +125,9 @@ object FileSets {
         val fam = if (tfamfile != "") Some(new File(tfamfile)) else None
 
         FileSets.PDose(new File(pdosefile), missingGenotypeValue.toFloat, fam) :: Nil
-      } else if (hdfdosagefile != "") { FileSets.HDFDosage(new File(hdfdosagefile)) :: Nil }
-      else if (vcf != "" && vcfindex == "") { FileSets.VCFFile(new File(vcf)) :: Nil }
-      else if (vcf != "" && vcfindex != "") { FileSets.VCFFileWithIndex(new File(vcf), new File(vcfindex)) :: Nil }
-
+      } // else if (hdfdosagefile != "") { FileSets.HDFDosage(new File(hdfdosagefile)) :: Nil }
+      // else if (vcf != "" && vcfindex == "") { FileSets.VCFFile(new File(vcf)) :: Nil }
+      // else if (vcf != "" && vcfindex != "") { FileSets.VCFFileWithIndex(new File(vcf), new File(vcfindex)) :: Nil }
       else configInstance.getString("genotypefiles") match {
         case x if x == "" => Nil
         case x => {
@@ -137,9 +136,9 @@ object FileSets {
               case "pdose" => FileSets.PDose(new File(f.split(" ")(0)), missingGenotypeValue.toFloat, Try(f.split(" ")(1)).toOption.map(f => new File(f)))
               case "pgenotypeprobabilities" => FileSets.PGenotypeProbabilities(new File(f.split(" ")(0)), missingGenotypeValue.toFloat, Try(f.split(" ")(1)).toOption.map(f => new File(f)))
               case "tped" => FileSets.TPed(new File(f.split(" ")(0)), new File(f.split(" ")(1)), missingGenotypeValue(0))
-              case "hdfdosage" => FileSets.HDFDosage(new File(f))
-              case "vcf" if f.split(" ").size == 1 => FileSets.VCFFile(new File(f))
-              case "vcf" if f.split(" ").size > 1 => FileSets.VCFFileWithIndex(new File(f.split(" ")(0)), new File(f.split(" ")(1)))
+              // case "hdfdosage" => FileSets.HDFDosage(new File(f))
+              // case "vcf" if f.split(" ").size == 1 => FileSets.VCFFile(new File(f))
+              // case "vcf" if f.split(" ").size > 1 => FileSets.VCFFileWithIndex(new File(f.split(" ")(0)), new File(f.split(" ")(1)))
               case "bed" => FileSets.BedFile(new File(f.split(" ")(0)), new File(f.split(" ")(1)), new File(f.split(" ")(2)))
             }
           }
@@ -173,20 +172,20 @@ object FileSets {
           f(SNPMajorReaders.getSNPMajorIterator(PDoseFiles(source, missing, inds), subset, filterMarkerNames).filter(filterOnMaf))
         }
       }
-      case BGZippedPDose(file, missing, fam, _) => {
-        val inds = fam.map(x => openSource(x.getCanonicalPath)(s => getIndividualsFromFamFile(s)))
-
-        openSource(file.getCanonicalPath) { source =>
-          f(SNPMajorReaders.getSNPMajorIterator(PDoseFiles(source, missing, inds), subset, filterMarkerNames).filter(filterOnMaf))
-        }
-      }
-      case BGZippedPGenotypeProbabilities(file, missing, fam, _) => {
-        val inds = fam.map(x => openSource(x.getCanonicalPath)(s => getIndividualsFromFamFile(s)))
-
-        openSource(file.getCanonicalPath) { source =>
-          f(SNPMajorReaders.getSNPMajorIterator(PGenotypeProbabilitiesFiles(source, missing, inds), subset, filterMarkerNames).filter(filterOnMaf))
-        }
-      }
+      // case BGZippedPDose(file, missing, fam, _) => {
+      //   val inds = fam.map(x => openSource(x.getCanonicalPath)(s => getIndividualsFromFamFile(s)))
+      //
+      //   openSource(file.getCanonicalPath) { source =>
+      //     f(SNPMajorReaders.getSNPMajorIterator(PDoseFiles(source, missing, inds), subset, filterMarkerNames).filter(filterOnMaf))
+      //   }
+      // }
+      // case BGZippedPGenotypeProbabilities(file, missing, fam, _) => {
+      //   val inds = fam.map(x => openSource(x.getCanonicalPath)(s => getIndividualsFromFamFile(s)))
+      //
+      //   openSource(file.getCanonicalPath) { source =>
+      //     f(SNPMajorReaders.getSNPMajorIterator(PGenotypeProbabilitiesFiles(source, missing, inds), subset, filterMarkerNames).filter(filterOnMaf))
+      //   }
+      // }
       case PGenotypeProbabilities(file, missing, fam) => {
         val inds = fam.map(x => openSource(x.getCanonicalPath)(s => getIndividualsFromFamFile(s)))
         openSource(file.getCanonicalPath) { source =>
@@ -200,31 +199,31 @@ object FileSets {
           }
         }
       }
-      case HDFDosage(file) => {
-        val reader = HDF5Factory.openForReading(file)
-        val x = f(HDFDosageIterator.getSNPMajorIterator(reader, subset = subset, bufferSize = 10000, filterMarkerNames = filterMarkerNames.map(x => mybiotools.stringstore.StringStore(x))))
-        reader.close
-        x
-
-      }
-      case VCFFile(file) => {
-        val reader = vcfhelpers.VCFHelpers.openVCF(file, None)
-        try {
-          f(vcfhelpers.VCFHelpers.getSNPMajorIterators(file, subset, filterMarkerNames))
-        } finally {
-          reader.close
-        }
-
-      }
-      case VCFFileWithIndex(file, _) => {
-        val reader = vcfhelpers.VCFHelpers.openVCF(file, None)
-        try {
-          f(vcfhelpers.VCFHelpers.getSNPMajorIterators(file, subset, filterMarkerNames))
-        } finally {
-          reader.close
-        }
-
-      }
+      // case HDFDosage(file) => {
+      //   val reader = HDF5Factory.openForReading(file)
+      //   val x = f(HDFDosageIterator.getSNPMajorIterator(reader, subset = subset, bufferSize = 10000, filterMarkerNames = filterMarkerNames.map(x => mybiotools.stringstore.StringStore(x))))
+      //   reader.close
+      //   x
+      //
+      // }
+      // case VCFFile(file) => {
+      //   val reader = vcfhelpers.VCFHelpers.openVCF(file, None)
+      //   try {
+      //     f(vcfhelpers.VCFHelpers.getSNPMajorIterators(file, subset, filterMarkerNames))
+      //   } finally {
+      //     reader.close
+      //   }
+      //
+      // }
+      // case VCFFileWithIndex(file, _) => {
+      //   val reader = vcfhelpers.VCFHelpers.openVCF(file, None)
+      //   try {
+      //     f(vcfhelpers.VCFHelpers.getSNPMajorIterators(file, subset, filterMarkerNames))
+      //   } finally {
+      //     reader.close
+      //   }
+      //
+      // }
     }
   }
 
@@ -288,20 +287,20 @@ object FileSets {
         (SNPMajorReaders.getSNPMajorIterator(PGenotypeProbabilitiesFiles(source, missing, inds), subset, filterMarkerNames).filter(filterOnMaf), source)
 
       }
-      case BGZippedPDose(file, missing, fam, _) => {
-        val inds = fam.map(x => openSource(x.getCanonicalPath)(s => getIndividualsFromFamFile(s)))
-
-        val source = createSource(file)
-        (SNPMajorReaders.getSNPMajorIterator(PDoseFiles(source, missing, inds), subset, filterMarkerNames).filter(filterOnMaf), source)
-
-      }
-      case BGZippedPGenotypeProbabilities(file, missing, fam, _) => {
-        val inds = fam.map(x => openSource(x.getCanonicalPath)(s => getIndividualsFromFamFile(s)))
-
-        val source = createSource(file)
-        (SNPMajorReaders.getSNPMajorIterator(PGenotypeProbabilitiesFiles(source, missing, inds), subset, filterMarkerNames).filter(filterOnMaf), source)
-
-      }
+      // case BGZippedPDose(file, missing, fam, _) => {
+      //   val inds = fam.map(x => openSource(x.getCanonicalPath)(s => getIndividualsFromFamFile(s)))
+      //
+      //   val source = createSource(file)
+      //   (SNPMajorReaders.getSNPMajorIterator(PDoseFiles(source, missing, inds), subset, filterMarkerNames).filter(filterOnMaf), source)
+      //
+      // }
+      // case BGZippedPGenotypeProbabilities(file, missing, fam, _) => {
+      //   val inds = fam.map(x => openSource(x.getCanonicalPath)(s => getIndividualsFromFamFile(s)))
+      //
+      //   val source = createSource(file)
+      //   (SNPMajorReaders.getSNPMajorIterator(PGenotypeProbabilitiesFiles(source, missing, inds), subset, filterMarkerNames).filter(filterOnMaf), source)
+      //
+      // }
       case TPed(fam, tped, missing) => {
         val famsource = createSource(fam)
         val tpedsource = createSource(tped)
@@ -314,23 +313,23 @@ object FileSets {
         })
 
       }
-      case HDFDosage(file) => {
-        val reader = HDF5Factory.openForReading(file)
-        val x = HDFDosageIterator.getSNPMajorIterator(reader, subset = subset, bufferSize = 10000, filterMarkerNames = filterMarkerNames.map(x => mybiotools.stringstore.StringStore(x)))
-
-        (x, reader)
-
-      }
-      case VCFFile(file) => {
-        val reader = vcfhelpers.VCFHelpers.openVCF(file, None)
-        val x = vcfhelpers.VCFHelpers.getSNPMajorIterators(reader, subset, filterMarkerNames)
-        (x, reader)
-      }
-      case VCFFileWithIndex(file, _) => {
-        val reader = vcfhelpers.VCFHelpers.openVCF(file, None)
-        val x = vcfhelpers.VCFHelpers.getSNPMajorIterators(reader, subset, filterMarkerNames)
-        (x, reader)
-      }
+      // case HDFDosage(file) => {
+      //   val reader = HDF5Factory.openForReading(file)
+      //   val x = HDFDosageIterator.getSNPMajorIterator(reader, subset = subset, bufferSize = 10000, filterMarkerNames = filterMarkerNames.map(x => mybiotools.stringstore.StringStore(x)))
+      //
+      //   (x, reader)
+      //
+      // }
+      // case VCFFile(file) => {
+      //   val reader = vcfhelpers.VCFHelpers.openVCF(file, None)
+      //   val x = vcfhelpers.VCFHelpers.getSNPMajorIterators(reader, subset, filterMarkerNames)
+      //   (x, reader)
+      // }
+      // case VCFFileWithIndex(file, _) => {
+      //   val reader = vcfhelpers.VCFHelpers.openVCF(file, None)
+      //   val x = vcfhelpers.VCFHelpers.getSNPMajorIterators(reader, subset, filterMarkerNames)
+      //   (x, reader)
+      // }
     }
   }
 
@@ -381,39 +380,39 @@ object FileSets {
         })
 
       }
-      case HDFDosage(file) => {
-
-        val reader = HDF5Factory.openForReading(file)
-        val x = new HDFDosageReader(reader, 10000)(x => true)
-
-        (x, reader)
-
-      }
-      case VCFFileWithIndex(file, index) => {
-
-        val reader = vcfhelpers.VCFHelpers.openVCF(file, None)
-        val map = vcfhelpers.VCFHelpers.getGenomicMap(reader)
-
-        val x = vcfhelpers.VCFHelpers.getSNPMajorQuery(reader, map)
-        (x, reader)
-
-      }
-      case BGZippedPDose(file, missingValue, fam, index) => {
-
-        val inds = fam.map(x => openSource(x.getCanonicalPath)(s => getIndividualsFromFamFile(s)))
-        val idx = openSource(index)(s => readIndex(s, (s: String) => StringStore(s)).toMap)
-
-        val x = new DelimitedSNPMajorQuery(BGZPDose(file, missingValue, inds, idx))
-        (x, x)
-      }
-      case BGZippedPGenotypeProbabilities(file, missingValue, fam, index) => {
-
-        val inds = fam.map(x => openSource(x.getCanonicalPath)(s => getIndividualsFromFamFile(s)))
-        val idx = openSource(index)(s => readIndex(s, (s: String) => StringStore(s)).toMap)
-
-        val x = new DelimitedSNPMajorQuery(BGZPGeno(file, missingValue, inds, idx))
-        (x, x)
-      }
+      // case HDFDosage(file) => {
+      //
+      //   val reader = HDF5Factory.openForReading(file)
+      //   val x = new HDFDosageReader(reader, 10000)(x => true)
+      //
+      //   (x, reader)
+      //
+      // }
+      // case VCFFileWithIndex(file, index) => {
+      //
+      //   val reader = vcfhelpers.VCFHelpers.openVCF(file, None)
+      //   val map = vcfhelpers.VCFHelpers.getGenomicMap(reader)
+      //
+      //   val x = vcfhelpers.VCFHelpers.getSNPMajorQuery(reader, map)
+      //   (x, reader)
+      //
+      // }
+      // case BGZippedPDose(file, missingValue, fam, index) => {
+      //
+      //   val inds = fam.map(x => openSource(x.getCanonicalPath)(s => getIndividualsFromFamFile(s)))
+      //   val idx = openSource(index)(s => readIndex(s, (s: String) => StringStore(s)).toMap)
+      //
+      //   val x = new DelimitedSNPMajorQuery(BGZPDose(file, missingValue, inds, idx))
+      //   (x, x)
+      // }
+      // case BGZippedPGenotypeProbabilities(file, missingValue, fam, index) => {
+      //
+      //   val inds = fam.map(x => openSource(x.getCanonicalPath)(s => getIndividualsFromFamFile(s)))
+      //   val idx = openSource(index)(s => readIndex(s, (s: String) => StringStore(s)).toMap)
+      //
+      //   val x = new DelimitedSNPMajorQuery(BGZPGeno(file, missingValue, inds, idx))
+      //   (x, x)
+      // }
       case PDose(file, missingValue, fam) => {
         val bgzf = TempFile.createTempFile(".blocked.gz")
         openBlockedZippedFileOutputStream(bgzf) { os =>
@@ -463,51 +462,51 @@ object FileSets {
         }
 
       }
-      case HDFDosage(file) => {
-        val reader = HDF5Factory.openForReading(file)
-        val dosagereader = new HDFDosageReader(reader, 10000)(x => true)
-        try {
-          f(dosagereader)
-        } finally {
-          dosagereader.close
-        }
-
-      }
-      case VCFFileWithIndex(file, index) => {
-        val reader = vcfhelpers.VCFHelpers.openVCF(file, Some(index))
-        val map = vcfhelpers.VCFHelpers.getGenomicMap(reader)
-        try {
-          f(vcfhelpers.VCFHelpers.getSNPMajorQuery(reader, map))
-        } finally {
-
-          reader.close
-        }
-
-      }
-      case BGZippedPDose(file, missingValue, fam, index) => {
-
-        val inds = fam.map(x => openSource(x.getCanonicalPath)(s => getIndividualsFromFamFile(s)))
-        val idx = openSource(index)(s => readIndex(s, (s: String) => StringStore(s))).toMap
-
-        val x = new DelimitedSNPMajorQuery(BGZPDose(file, missingValue, inds, idx))
-        try {
-          f(x)
-        } finally {
-          x.close
-        }
-      }
-      case BGZippedPGenotypeProbabilities(file, missingValue, fam, index) => {
-
-        val inds = fam.map(x => openSource(x.getCanonicalPath)(s => getIndividualsFromFamFile(s)))
-        val idx = openSource(index)(s => readIndex(s, (s: String) => StringStore(s))).toMap
-
-        val x = new DelimitedSNPMajorQuery(BGZPGeno(file, missingValue, inds, idx))
-        try {
-          f(x)
-        } finally {
-          x.close
-        }
-      }
+      // case HDFDosage(file) => {
+      //   val reader = HDF5Factory.openForReading(file)
+      //   val dosagereader = new HDFDosageReader(reader, 10000)(x => true)
+      //   try {
+      //     f(dosagereader)
+      //   } finally {
+      //     dosagereader.close
+      //   }
+      //
+      // }
+      // case VCFFileWithIndex(file, index) => {
+      //   val reader = vcfhelpers.VCFHelpers.openVCF(file, Some(index))
+      //   val map = vcfhelpers.VCFHelpers.getGenomicMap(reader)
+      //   try {
+      //     f(vcfhelpers.VCFHelpers.getSNPMajorQuery(reader, map))
+      //   } finally {
+      //
+      //     reader.close
+      //   }
+      //
+      // }
+      // case BGZippedPDose(file, missingValue, fam, index) => {
+      //
+      //   val inds = fam.map(x => openSource(x.getCanonicalPath)(s => getIndividualsFromFamFile(s)))
+      //   val idx = openSource(index)(s => readIndex(s, (s: String) => StringStore(s))).toMap
+      //
+      //   val x = new DelimitedSNPMajorQuery(BGZPDose(file, missingValue, inds, idx))
+      //   try {
+      //     f(x)
+      //   } finally {
+      //     x.close
+      //   }
+      // }
+      // case BGZippedPGenotypeProbabilities(file, missingValue, fam, index) => {
+      //
+      //   val inds = fam.map(x => openSource(x.getCanonicalPath)(s => getIndividualsFromFamFile(s)))
+      //   val idx = openSource(index)(s => readIndex(s, (s: String) => StringStore(s))).toMap
+      //
+      //   val x = new DelimitedSNPMajorQuery(BGZPGeno(file, missingValue, inds, idx))
+      //   try {
+      //     f(x)
+      //   } finally {
+      //     x.close
+      //   }
+      // }
       case PDose(file, missingValue, fam) => {
         val bgzf = TempFile.createTempFile(".blocked.gz")
         openBlockedZippedFileOutputStream(bgzf) { os =>

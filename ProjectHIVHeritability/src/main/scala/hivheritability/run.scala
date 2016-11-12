@@ -330,7 +330,7 @@ class HIVHeritabilityRun(config: HIVHeritabilityConfig, taskSystem: TaskSystem) 
   import taskSystem._
   import config._
   implicit val fs = components.fs
-  implicit val context = components.actorsystem
+  // implicit val context = components.actorsystem
 
   private val allcohortname = "all"
   private val mixdownname = "mixdown"
@@ -667,39 +667,7 @@ class HIVHeritabilityRun(config: HIVHeritabilityConfig, taskSystem: TaskSystem) 
 
             alignmentFullGenomeAminoAcid.map { pergenealignments =>
 
-              if (onlyCurrentG2GPositions) {
-                datafromlasso map { humangenotypes =>
-                  pergenealignments.map {
-                    case (gene, aminoacidalignment) =>
-
-                      val indicators: Frame[Individual, (Int, Char), Option[Boolean]] =
-                        fasta2indicators(aminoacidalignment, referenceNames(gene))(isAminoAcid).sortedRIx.sortedCIx.mapRowIndex(s => Individual(s, "1"))
-
-                      val regressionresults: Seq[(((Int, Char), String), Either[FailedRegression, LogisticRegressionResult])] =
-                        g2g(
-                          indicators,
-                          humangenotypes,
-                          covariatesInMemory
-                        )
-
-                      log.info("Number of samples for G2G regression: " + gene + ": " + indicators.numRows + "/" + humangenotypes.numRows + "/" + covariatesInMemory.numRows)
-
-                      val positions: Set[Int] =
-                        regressionresults
-                          .groupBy(_._1._1)
-                          .filter((y: ((Int, Char), Seq[(((Int, Char), String), Either[FailedRegression, LogisticRegressionResult])])) =>
-
-                            y._2.exists(x => x._2.right.toOption.map(_.covariates(x._1._2)._2.pValue <= g2gpthreshold).getOrElse(false)))
-                          .map(_._1._1)
-                          .toSet
-
-                      log.info("G2G regression for " + gene + ": " + positions.toSeq.sorted)
-
-                      gene -> positions
-                  }.toMap
-
-                } getOrElse Map()
-              } else addMaps(g2gHitsFromFile, lanlEpitopes)(_ ++ _)
+              addMaps(g2gHitsFromFile, lanlEpitopes)(_ ++ _)
 
             }
 

@@ -1,25 +1,25 @@
-/* 
+/*
 * The MIT License
 *
-* Copyright (c) 2015 ECOLE POLYTECHNIQUE FEDERALE DE LAUSANNE, Switzerland, 
+* Copyright (c) 2015 ECOLE POLYTECHNIQUE FEDERALE DE LAUSANNE, Switzerland,
 * Group Fellay
 *
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the "Software"),
-* to deal in the Software without restriction, including without limitation 
-* the rights to use, copy, modify, merge, publish, distribute, sublicense, 
+* to deal in the Software without restriction, including without limitation
+* the rights to use, copy, modify, merge, publish, distribute, sublicense,
 * and/or sell copies of the Software, and to permit persons to whom the Software
 * is furnished to do so, subject to the following conditions:
 *
 * The above copyright notice and this permission notice shall be included in all
 * copies or substantial portions of the Software.
 *
-* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
-* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
-* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
-* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
-* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
-* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 * SOFTWARE.
 */
 
@@ -28,22 +28,22 @@ package hdfdosage
 import mybiotools.gwascommons.genotypedata._
 import java.io.File
 import mybiotools._
-import _root_.ch.systemsx.cisd.hdf5._
+// import _root_.ch.systemsx.cisd.hdf5._
 import mybiotools.gwascommons._
 import scala.util.
   _
 
 object WriteData {
 
-  def writeBlockedPDose(pdosestring: String, missingValue: Float) = {
-
-    val tmp = TempFile.createTempFile("df")
-    val indexFile = new File(tmp.getAbsolutePath + ".pidx")
-    openBlockedZippedFileWriter(tmp)(wr => wr.write(pdosestring))
-    val index = BGZippedGenotypeHelper.makeIndex(tmp)
-    openZippedFileWriter(indexFile)(writer => flatindex.writeIndex(index, writer, (s: mybiotools.stringstore.String8) => s.value))
-    FileSets.BGZippedPDose(tmp, missingValue, None, indexFile)
-  }
+  // def writeBlockedPDose(pdosestring: String, missingValue: Float) = {
+  //
+  //   val tmp = TempFile.createTempFile("df")
+  //   val indexFile = new File(tmp.getAbsolutePath + ".pidx")
+  //   openBlockedZippedFileWriter(tmp)(wr => wr.write(pdosestring))
+  //   val index = BGZippedGenotypeHelper.makeIndex(tmp)
+  //   openZippedFileWriter(indexFile)(writer => flatindex.writeIndex(index, writer, (s: mybiotools.stringstore.String8) => s.value))
+  //   FileSets.BGZippedPDose(tmp, missingValue, None, indexFile)
+  // }
 
   def write(
     mergedIndividuals: Seq[Individual],
@@ -71,22 +71,22 @@ object WriteData {
         }
         None
       }
-      case HDFDosage => {
-
-        @inline
-        def replaceMissing(in: Array[Float]): Array[Float] = in.map(x => x match {
-          case x if x == missingValue || x.isNaN => hdfdosage.MissingValue
-          case x => x
-        })
-
-        val hdfWriter = HDF5Factory.open(outputFile)
-
-        HDFFile.writeHDF(hdfWriter, mergedIndividuals.size, mergedIndividuals, if (missingValue == hdfdosage.MissingValue) snpDataIterator else snpDataIterator.map(x => x._1 -> replaceMissing(x._2)), blockSize)
-
-        hdfWriter.file.flush
-        hdfWriter.close
-        Some(FileSets.HDFDosage(outputFile))
-      }
+      // case HDFDosage => {
+      //
+      //   @inline
+      //   def replaceMissing(in: Array[Float]): Array[Float] = in.map(x => x match {
+      //     case x if x == missingValue || x.isNaN => hdfdosage.MissingValue
+      //     case x => x
+      //   })
+      //
+      //   val hdfWriter = HDF5Factory.open(outputFile)
+      //
+      //   HDFFile.writeHDF(hdfWriter, mergedIndividuals.size, mergedIndividuals, if (missingValue == hdfdosage.MissingValue) snpDataIterator else snpDataIterator.map(x => x._1 -> replaceMissing(x._2)), blockSize)
+      //
+      //   hdfWriter.file.flush
+      //   hdfWriter.close
+      //   Some(FileSets.HDFDosage(outputFile))
+      // }
       case PDose => {
         import mybiotools.flatindex._
         import mybiotools.stringstore._
@@ -167,7 +167,7 @@ object WriteData {
       }
       case TPed(hardcall, missing) => {
 
-        // Write .big and .bim        
+        // Write .big and .bim
         openFileWriter(new File(outputFile.getCanonicalPath + ".bim")) { writer =>
           TPedFile.writeTPED(new File(outputFile.getCanonicalPath + ".tped"), new File(outputFile.getCanonicalPath + ".tfam"), writer, mergedIndividuals, snpDataIterator, genomicMap, (x => true), hardcall, missing)
         }
@@ -175,7 +175,7 @@ object WriteData {
       }
       case BIGSNPMajor => {
 
-        // Write .big and .bim        
+        // Write .big and .bim
         openFileWriter(new File(outputFile.getCanonicalPath + ".bim")) { writer =>
           BIGFile.writeBIG(new File(outputFile.getCanonicalPath + ".big"), new File(outputFile.getCanonicalPath + ".fam"), writer, mergedIndividuals, snpDataIterator, genomicMap, recodeToRecessive)
         }

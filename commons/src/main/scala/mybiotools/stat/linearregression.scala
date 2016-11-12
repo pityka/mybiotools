@@ -1,25 +1,25 @@
-/* 
+/*
 * The MIT License
 *
-* Copyright (c) 2015 ECOLE POLYTECHNIQUE FEDERALE DE LAUSANNE, Switzerland, 
+* Copyright (c) 2015 ECOLE POLYTECHNIQUE FEDERALE DE LAUSANNE, Switzerland,
 * Group Fellay
 *
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the "Software"),
-* to deal in the Software without restriction, including without limitation 
-* the rights to use, copy, modify, merge, publish, distribute, sublicense, 
+* to deal in the Software without restriction, including without limitation
+* the rights to use, copy, modify, merge, publish, distribute, sublicense,
 * and/or sell copies of the Software, and to permit persons to whom the Software
 * is furnished to do so, subject to the following conditions:
 *
 * The above copyright notice and this permission notice shall be included in all
 * copies or substantial portions of the Software.
 *
-* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
-* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
-* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
-* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
-* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
-* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 * SOFTWARE.
 */
 
@@ -221,11 +221,11 @@ object LinearRegression {
   def studentTestLazy(estimate: Double, sd: Double, df: Double, location: Double = 0.0): StudentTestResult = {
     if (df <= 0 || sd.isNaN || estimate.isNaN || sd.isInfinite || sd == 0.0 || sd > 1E7) FailedStudentTest
     else {
-
-      new StudentTestResult {
-        val statistic = (estimate - location) / sd
-        lazy val pValue = if (math.abs(statistic) > 12) 2 * (jdistlib.T.cumulative(math.abs(statistic), df.toDouble, false, false)) else 2 * (1.0 - cern.jet.stat.Probability.studentT(df.toDouble, math.abs(statistic)))
-      }
+      ???
+      // new StudentTestResult {
+      //   val statistic = (estimate - location) / sd
+      //   lazy val pValue = if (math.abs(statistic) > 12) 2 * (jdistlib.T.cumulative(math.abs(statistic), df.toDouble, false, false)) else 2 * (1.0 - cern.jet.stat.Probability.studentT(df.toDouble, math.abs(statistic)))
+      // }
     }
   }
 
@@ -493,7 +493,7 @@ object LinearRegression {
     }
     val covarWithIntercept = "intercept" +: covNamesInData
     val covarKeysWithY: Seq[String] = covarWithIntercept :+ yKey
-    // val empty = Map[String, Option[Double]](covarKeysWithY.map(x => x -> None).toSeq: _*) 
+    // val empty = Map[String, Option[Double]](covarKeysWithY.map(x => x -> None).toSeq: _*)
 
     val (yy, covarMatrix, samplenames) = {
 

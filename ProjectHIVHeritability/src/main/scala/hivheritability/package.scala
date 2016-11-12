@@ -128,28 +128,28 @@ package object hivheritability {
     )
   }
 
-  def g2g[T](
-    indicators: Frame[Individual, T, Option[Boolean]],
-    humangenotypes: Frame[Individual, String, Double],
-    covariates: Frame[Individual, String, Double]
-  ): Seq[((T, String), Either[FailedRegression, LogisticRegressionResult])] = {
-
-    humangenotypes.toColSeq.flatMap {
-      case (humangenotypename, humangenotypeSeries) =>
-        val mergedwithcovar: Frame[Individual, String, Double] = if (covariates.numCols > 0 && covariates.numRows > 0) Frame((humangenotypename, humangenotypeSeries) +: covariates.toColSeq: _*) else Frame((humangenotypename, humangenotypeSeries))
-
-        indicators.toColSeq.map {
-          case (indicatorname, indicatorSeries) =>
-            val nonmiss: Series[Individual, Boolean] = indicatorSeries.filter(_.isDefined).mapValues(_.get)
-            val regression = logisticRegression(mergedwithcovar, nonmiss, mergedwithcovar.colIx.toSeq, DropSample, 50, 1E-6)
-            if (regression.isLeft) {
-              println("failed regression " + indicatorname + " " + humangenotypename + " " + regression)
-            }
-            (indicatorname, humangenotypename) -> regression
-        }
-    }
-
-  }
+  // def g2g[T](
+  //   indicators: Frame[Individual, T, Option[Boolean]],
+  //   humangenotypes: Frame[Individual, String, Double],
+  //   covariates: Frame[Individual, String, Double]
+  // ): Seq[((T, String), Either[FailedRegression, LogisticRegressionResult])] = {
+  //
+  //   humangenotypes.toColSeq.flatMap {
+  //     case (humangenotypename, humangenotypeSeries) =>
+  //       val mergedwithcovar: Frame[Individual, String, Double] = if (covariates.numCols > 0 && covariates.numRows > 0) Frame((humangenotypename, humangenotypeSeries) +: covariates.toColSeq: _*) else Frame((humangenotypename, humangenotypeSeries))
+  //
+  //       indicators.toColSeq.map {
+  //         case (indicatorname, indicatorSeries) =>
+  //           val nonmiss: Series[Individual, Boolean] = indicatorSeries.filter(_.isDefined).mapValues(_.get)
+  //           val regression = logisticRegression(mergedwithcovar, nonmiss, mergedwithcovar.colIx.toSeq, DropSample, 50, 1E-6)
+  //           if (regression.isLeft) {
+  //             println("failed regression " + indicatorname + " " + humangenotypename + " " + regression)
+  //           }
+  //           (indicatorname, humangenotypename) -> regression
+  //       }
+  //   }
+  //
+  // }
 
   def makeReport(result: GCTAResampledResultSummary, title: String): String = {
     s"""
